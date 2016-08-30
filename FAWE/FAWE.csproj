@@ -46,8 +46,10 @@
   <ItemGroup>
     <Compile Include="Charm.cs" />
     <Compile Include="Combainer.cs" />
+    <Compile Include="DamageEffect.cs" />
     <Compile Include="Effect.cs" />
     <Compile Include="EffectManager.cs" />
+    <Compile Include="ElementsInfo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

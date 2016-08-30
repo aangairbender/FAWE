@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace FAWE
 {
-    enum EffectType : int { Damage, Heal, Durability, Push};
+    enum EffectType : int { None, Damage };
     class Effect
     {
-        private EffectType type;
+        protected EffectType type;
 
+        public Effect()
+        {
+            this.type = EffectType.None;
+
+        }
         public EffectType getType()
         {
             return type;
