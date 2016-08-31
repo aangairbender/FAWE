@@ -20,18 +20,18 @@ namespace FAWE
             {
                 case EffectType.Damage:
                     {
-                        ranges[(int)ElementType.Air] = new Tuple<float, float>(200, 200);//means 100% probability
-                        ranges[(int)ElementType.Earth] = new Tuple<float, float>(200, 200);
-                        ranges[(int)ElementType.Fire] = new Tuple<float, float>(80, 100);
-                        ranges[(int)ElementType.Water] = new Tuple<float, float>(200, 200);
+                        ranges[(int)ElementType.Air] = new Tuple<float, float>(2, 2);//means 100% probability
+                        ranges[(int)ElementType.Earth] = new Tuple<float, float>(2, 2);
+                        ranges[(int)ElementType.Fire] = new Tuple<float, float>(0.8f, 1);
+                        ranges[(int)ElementType.Water] = new Tuple<float, float>(2, 2);
                         break;
                     }
                 default:
                     {
-                        ranges[(int)ElementType.Air] = new Tuple<float, float>(-200, -200);//means 0% probability
-                        ranges[(int)ElementType.Earth] = new Tuple<float, float>(-200, -200);
-                        ranges[(int)ElementType.Fire] = new Tuple<float, float>(-200, -200);
-                        ranges[(int)ElementType.Water] = new Tuple<float, float>(-200, -200);
+                        ranges[(int)ElementType.Air] = new Tuple<float, float>(-2, -2);//means 0% probability
+                        ranges[(int)ElementType.Earth] = new Tuple<float, float>(-2, -2);
+                        ranges[(int)ElementType.Fire] = new Tuple<float, float>(-2, -2);
+                        ranges[(int)ElementType.Water] = new Tuple<float, float>(-2, -2);
                         break;
                     }
             }
@@ -66,7 +66,7 @@ namespace FAWE
             float probability = 1f;
             foreach(ElementType element in Enum.GetValues(typeof(ElementType)))
             {
-                if (percentageRanges[(int)element].Item1 > 100) continue;
+                if (percentageRanges[(int)element].Item1 > 1) continue;
 
                 if (percentageRanges[(int)element].Item1 > percentages[(int)element] ||
                     percentageRanges[(int)element].Item2 < percentages[(int)element])
@@ -75,7 +75,7 @@ namespace FAWE
                     break;
                 }
                 float middle = (percentageRanges[(int)element].Item1 + percentageRanges[(int)element].Item2) / 2;
-                float halfRangeLength = (percentageRanges[(int)element].Item2 - percentageRanges[(int)element].Item1) / 2;
+                float halfRangeLength = (percentageRanges[(int)element].Item2 - percentageRanges[(int)element].Item1);
                 float curDist = Math.Abs(percentages[(int)element] - middle);
                 probability *= PROBABILITY_FACTOR_MIN + (halfRangeLength - curDist) / halfRangeLength * (PROBABILITY_FACTOR_MAX - PROBABILITY_FACTOR_MIN);
             }

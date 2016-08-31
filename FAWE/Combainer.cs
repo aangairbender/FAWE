@@ -24,7 +24,6 @@ namespace FAWE
             {
                 newElements[(int)element] = elementsA.getElement(element) + elementsB.getElement(element);
                 averagePercantages[(int)element] = (percantagesA[(int)element] + percantagesB[(int)element]) / 2;
-
             }
 
             float[] effectProbabilities = new float[Enum.GetNames(typeof(EffectType)).Length];
@@ -32,7 +31,7 @@ namespace FAWE
             float[] effectProbabilitiesB = charmB.getEffectProbabibilities();
             foreach(EffectType effect in Enum.GetValues(typeof(EffectType)))
             {
-                float parentFactor = 0.5f;
+                float parentFactor = 0.5f; //effects can only disappear
                 parentFactor += 0.25f * effectProbabilitiesA[(int)effect];
                 parentFactor += 0.25f * effectProbabilitiesB[(int)effect];
 

@@ -8,11 +8,16 @@ namespace FAWE
 {
     class Charm
     {
-        private Charm parent1;
-        private Charm parent2;
-        private float[] effectProbabilities;
-        private int level;
-        private ElementsInfo elements;
+        protected Charm parent1;
+        protected Charm parent2;
+        protected float[] effectProbabilities;
+        protected int level;
+        protected ElementsInfo elements;
+
+        protected Charm()
+        {
+
+        }
 
         public Charm(Charm parent1, Charm parent2, float[] effectProbabilities, int level, ElementsInfo elements)
         {
