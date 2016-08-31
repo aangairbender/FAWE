@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FAWE
 {
-    enum EffectType : int { None, Damage };
+    enum EffectType : int { None, Damage, Heal };
     class Effect
     {
         protected EffectType type;
@@ -20,5 +20,6 @@ namespace FAWE
         {
             return type;
         }
+
     }
 }

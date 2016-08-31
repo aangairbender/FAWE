@@ -13,50 +13,15 @@ namespace FAWE
 
         private static List<ElementRanges> getEffectSuitRanges(EffectType effectType)
         {
-            int elementsCount = Enum.GetNames(typeof(ElementType)).Length;
-            List<ElementRanges> result = new List<ElementRanges>();
-            switch(effectType)
-            {
-                case EffectType.Damage:
-                    {
-                        ElementRanges ranges = new ElementRanges();
-                        ranges[(int)ElementType.Fire] = new Tuple<float, float>(0.8f, 1);
-                        result.Add(ranges);
-
-                        ranges = new ElementRanges();
-                        ranges[(int)ElementType.Earth] = new Tuple<float, float>(0.5f, 0.7f);
-                        result.Add(ranges);
-
-                        break;
-                    }
-                default:
-                    {
-                        
-                        result.Add(new ElementRanges());
-                        break;
-                    }
-            }
-
-
-            return result;
+            string effectName = Enum.GetName(typeof(EffectType), effectType);
+            return (List<ElementRanges>)Type.GetType("FAWE." + effectName + "Effect").GetMethod("getSuitRanges").Invoke(null, null);
         }
 
 
         public static float getCarcaseFactor(EffectType effectType, CarcaseType carcaseType)
         {
-            switch(effectType)
-            {
-                case EffectType.Damage:
-                    {
-                        if (carcaseType == CarcaseType.Shield) return 0.8f;
-                        if (carcaseType == CarcaseType.Dome) return 0.5f;
-                        return 1f;
-                    }
-                default:
-                    {
-                        return 1f;
-                    }
-            }
+            string effectName = Enum.GetName(typeof(EffectType), effectType);
+            return (float)Type.GetType("FAWE." + effectName + "Effect").GetMethod("getCarcaseFactor").Invoke(null, new object[1] { carcaseType });
         }
 
 
@@ -99,21 +64,8 @@ namespace FAWE
 
         public static Effect createEffect(EffectType effectType, Charm charm)
         {
-            switch(effectType)
-            {
-                case EffectType.Damage:
-                    {
-                        int damageValue = 100 * charm.getElements().getElement(ElementType.Fire); //TODO: fix constant
-                        Effect effect = new DamageEffect(damageValue);
-                        return effect;
-                    }
-                default:
-                    {
-                        Effect effect = new Effect();
-                        return effect;
-                    }
-            }
-            
+            string effectName = Enum.GetName(typeof(EffectType), effectType);
+            return (Effect)Type.GetType("FAWE." + effectName + "Effect").GetMethod("createInstance").Invoke(null, new object[1] { charm });          
         }
 
     }
