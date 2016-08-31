@@ -16,7 +16,7 @@ namespace FAWE
             this.elements = elements;
         }
 
-        public int[] getArray()
+        public int[] asArray()
         {
             return elements;
         }

@@ -11,32 +11,28 @@ namespace FAWE
 
         private const float PROBABILITY_FACTOR = 0.9f;
 
-        private static List<Tuple<float, float>[]> getEffectSuitRanges(EffectType effectType)
+        private static List<ElementRanges> getEffectSuitRanges(EffectType effectType)
         {
             int elementsCount = Enum.GetNames(typeof(ElementType)).Length;
-            List<Tuple<float, float>[]> result = new List<Tuple<float, float>[]>();
-            Tuple<float, float>[] ranges = new Tuple<float, float>[elementsCount];
+            List<ElementRanges> result = new List<ElementRanges>();
             switch(effectType)
             {
                 case EffectType.Damage:
                     {
-                        ranges[(int)ElementType.Air] = new Tuple<float, float>(2, 2);//means 100% probability
-                        ranges[(int)ElementType.Earth] = new Tuple<float, float>(2, 2);
+                        ElementRanges ranges = new ElementRanges();
                         ranges[(int)ElementType.Fire] = new Tuple<float, float>(0.8f, 1);
-                        ranges[(int)ElementType.Water] = new Tuple<float, float>(2, 2);
-                        result.Add((Tuple<float,float>[])ranges.Clone());
+                        result.Add(ranges);
+
+                        ranges = new ElementRanges();
+                        ranges[(int)ElementType.Earth] = new Tuple<float, float>(0.5f, 0.7f);
+                        result.Add(ranges);
 
                         break;
                     }
                 default:
                     {
-                        ranges[(int)ElementType.Air] = new Tuple<float, float>(-2, -2);//means 0% probability
-                        ranges[(int)ElementType.Earth] = new Tuple<float, float>(-2, -2);
-                        ranges[(int)ElementType.Fire] = new Tuple<float, float>(-2, -2);
-                        ranges[(int)ElementType.Water] = new Tuple<float, float>(-2, -2);
-                        result.Add((Tuple<float, float>[])ranges.Clone());
-
-
+                        
+                        result.Add(new ElementRanges());
                         break;
                     }
             }
@@ -67,11 +63,12 @@ namespace FAWE
 
         public static float getEffectProbability(EffectType effectType, float[] percentages)
         {
-            List<Tuple<float, float>[]> percentageRanges = getEffectSuitRanges(effectType);
+            if (effectType == EffectType.None) return 0f;
+            List<ElementRanges> percentageRanges = getEffectSuitRanges(effectType);
             float[] probabilities = new float[percentageRanges.Count];
             for (int i = 0; i < percentageRanges.Count; ++i)
             {
-                Tuple<float, float>[] range = percentageRanges[i];
+                ElementRanges range = percentageRanges[i];
                 float probability = 1f;
                 foreach (ElementType element in Enum.GetValues(typeof(ElementType)))
                 {

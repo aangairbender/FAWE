@@ -51,6 +51,7 @@
     <Compile Include="EarthCharm.cs" />
     <Compile Include="Effect.cs" />
     <Compile Include="EffectManager.cs" />
+    <Compile Include="ElementRanges.cs" />
     <Compile Include="ElementsInfo.cs" />
     <Compile Include="FireCharm.cs" />
     <Compile Include="Form1.cs">
