@@ -12,6 +12,14 @@ namespace FAWE
         private CarcaseType carcase;
         private Charm charm;
 
+        
+        public Spell(List<Effect> effects, CarcaseType carcase, Charm charm)
+        {
+            this.effects = effects;
+            this.carcase = carcase;
+            this.charm = charm;
+        }
+
         public List<Effect> getEffects()
         {
             return effects;

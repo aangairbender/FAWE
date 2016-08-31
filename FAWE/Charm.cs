@@ -10,9 +10,18 @@ namespace FAWE
     {
         private Charm parent1;
         private Charm parent2;
-        private List<Effect> availableEffects;
+        private float[] effectProbabilities;
         private int level;
         private ElementsInfo elements;
+
+        public Charm(Charm parent1, Charm parent2, float[] effectProbabilities, int level, ElementsInfo elements)
+        {
+            this.parent1 = parent1;
+            this.parent2 = parent2;
+            this.effectProbabilities = effectProbabilities;
+            this.level = level;
+            this.elements = elements;
+        }
 
         public Charm getFirstParent()
         {
@@ -22,9 +31,9 @@ namespace FAWE
         {
             return parent2;
         }
-        public List<Effect> getAvailableEffects()
+        public float[] getEffectProbabibilities()
         {
-            return availableEffects;
+            return effectProbabilities;
         }
         public int getLevel()
         {

@@ -9,7 +9,7 @@ namespace FAWE
     class EffectManager //TODO: make all constants in another class like EffectBase
     {
 
-        private const float PROBABILITY_FACTOR_MIN = 0.7f;
+        private const float PROBABILITY_FACTOR_MIN = 0.5f;
         private const float PROBABILITY_FACTOR_MAX = 0.9f;
 
         private static Tuple<float, float>[] getEffectSuitRanges(EffectType effectType)
@@ -41,7 +41,7 @@ namespace FAWE
         }
 
 
-        private static float getCarcaseFactor(EffectType effectType, CarcaseType carcaseType)
+        public static float getCarcaseFactor(EffectType effectType, CarcaseType carcaseType)
         {
             switch(effectType)
             {
@@ -60,10 +60,9 @@ namespace FAWE
 
 
 
-        public static float getEffectProbability(EffectType effectType, Charm charm)
+        public static float getEffectProbability(EffectType effectType, float[] percentages)
         {
             Tuple<float, float>[] percentageRanges = getEffectSuitRanges(effectType);
-            float[] percentages = ElementsInfo.getPercentages(charm.getElements());
             float probability = 1f;
             foreach(ElementType element in Enum.GetValues(typeof(ElementType)))
             {
@@ -83,9 +82,9 @@ namespace FAWE
             return probability;
         }
 
-        public static float getEffectProbability(EffectType effectType, Charm charm, CarcaseType carcase)
+        public static float getEffectProbability(EffectType effectType, float[] percentages, CarcaseType carcase)
         {
-            float effectProbability = getEffectProbability(effectType, charm);
+            float effectProbability = getEffectProbability(effectType, percentages);
             float usingCarcaseProbability = getCarcaseFactor(effectType, carcase);
             return effectProbability * usingCarcaseProbability;
         }
