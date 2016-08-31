@@ -9,8 +9,7 @@ namespace FAWE
     class EffectManager //TODO: make all constants in another class like EffectBase
     {
 
-        private const float PROBABILITY_FACTOR_MIN = 0.5f;
-        private const float PROBABILITY_FACTOR_MAX = 0.9f;
+        private const float PROBABILITY_FACTOR = 0.9f;
 
         private static Tuple<float, float>[] getEffectSuitRanges(EffectType effectType)
         {
@@ -68,16 +67,13 @@ namespace FAWE
             {
                 if (percentageRanges[(int)element].Item1 > 1) continue;
 
-                if (percentageRanges[(int)element].Item1 > percentages[(int)element] ||
-                    percentageRanges[(int)element].Item2 < percentages[(int)element])
+                float offset = Math.Max(percentages[(int)element] - percentageRanges[(int)element].Item2,
+                    percentageRanges[(int)element].Item1 - percentages[(int)element]);
+                if(offset > 0)
                 {
-                    probability = 0f;
-                    break;
+                    probability *= (float)(1.0 - Math.Tanh(offset * 8));
                 }
-                float middle = (percentageRanges[(int)element].Item1 + percentageRanges[(int)element].Item2) / 2;
-                float halfRangeLength = (percentageRanges[(int)element].Item2 - percentageRanges[(int)element].Item1);
-                float curDist = Math.Abs(percentages[(int)element] - middle);
-                probability *= PROBABILITY_FACTOR_MIN + (halfRangeLength - curDist) / halfRangeLength * (PROBABILITY_FACTOR_MAX - PROBABILITY_FACTOR_MIN);
+                probability *= PROBABILITY_FACTOR;
             }
             return probability;
         }
