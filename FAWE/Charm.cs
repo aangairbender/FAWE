@@ -36,7 +36,7 @@ namespace FAWE
         {
             return parent2;
         }
-        public float[] getEffectProbabibilities()
+        public float[] getEffectProbabilities()
         {
             return effectProbabilities;
         }

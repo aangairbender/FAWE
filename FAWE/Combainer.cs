@@ -31,8 +31,8 @@ namespace FAWE
             ElementsInfo charmElementsInfo = new ElementsInfo(newElements);
 
             float[] effectProbabilities = new float[Enum.GetNames(typeof(EffectType)).Length];
-            float[] effectProbabilitiesA = charmA.getEffectProbabibilities();
-            float[] effectProbabilitiesB = charmB.getEffectProbabibilities();
+            float[] effectProbabilitiesA = charmA.getEffectProbabilities();
+            float[] effectProbabilitiesB = charmB.getEffectProbabilities();
             foreach(EffectType effect in Enum.GetValues(typeof(EffectType)))
             {
 
@@ -59,7 +59,7 @@ namespace FAWE
         public static Spell createSpell(Charm charm, CarcaseType carcase)
         {
             List<Effect> effects = new List<Effect>();
-            float[] effectProbabilities = charm.getEffectProbabibilities();
+            float[] effectProbabilities = charm.getEffectProbabilities();
             foreach(EffectType effect in Enum.GetValues(typeof(EffectType)))
             {
                 float probability = effectProbabilities[(int)effect] * EffectManager.getCarcaseFactor(effect, carcase);
