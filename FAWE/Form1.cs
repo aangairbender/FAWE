@@ -20,12 +20,41 @@ namespace FAWE
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            
-            dataGridView1.Rows.Clear();
-            addCharmToView(FireCharm.getInstance());
-            addCharmToView(AirCharm.getInstance());
-            addCharmToView(WaterCharm.getInstance());
-            addCharmToView(EarthCharm.getInstance());
+            if ((String)dataGridView1.Tag != "ok")
+            {
+                dataGridView2.Rows.Clear();
+                dataGridView1.Rows.Clear();
+                dataGridView1.Tag = "ok";
+                addCharmToView(FireCharm.getInstance());
+                addCharmToView(AirCharm.getInstance());
+                addCharmToView(WaterCharm.getInstance());
+                addCharmToView(EarthCharm.getInstance());
+            }
+            else
+            {
+                if (dataGridView1.SelectedRows.Count == 1)
+                {
+                    Charm a = (Charm)dataGridView1.SelectedRows[0].Cells[4].Value;
+                    addSpellToView(Combainer.createSpell(a, CarcaseType.Dome));
+                    addSpellToView(Combainer.createSpell(a, CarcaseType.Shield));
+                    addSpellToView(Combainer.createSpell(a, CarcaseType.Sphere));
+                }
+            }
+        }
+
+        private void addSpellToView(Spell spell)
+        {
+            dataGridView2.Rows.Add();
+            int index = dataGridView2.Rows.Count - 1;
+            dataGridView2[0, index].Value = spell.ToString();
+            dataGridView2[1, index].Value = spell.getCarcase().ToString();
+            String effString = "";
+            foreach (Effect effect in spell.getEffects())
+            {
+                effString += effect.getType().ToString() + ": " + effect.getDescription() + "\n";
+            }
+            dataGridView2[2, index].Value = effString;
+            dataGridView2[3, index].Value = spell;
         }
 
         private void addCharmToView(Charm charm)
@@ -35,17 +64,15 @@ namespace FAWE
             dataGridView1[0, index].Value = charm.ToString();
             dataGridView1[1, index].Value = "Level: " + charm.getLevel().ToString();
             String elemString = "";
-            elemString += "Elements:" + "\n";
             foreach(ElementType elementType in Enum.GetValues(typeof(ElementType)))
             {
-                elemString += "    " + elementType.ToString() + ": " + charm.getElements().getElement(elementType).ToString() + "\n";
+                elemString += elementType.ToString() + ": " + charm.getElements().getElement(elementType).ToString() + "\n";
             }
             dataGridView1[2, index].Value = elemString;
             String effString = "";
-            effString += "Effects:" + "\n";
             foreach (EffectType effectType in Enum.GetValues(typeof(EffectType)))
             {
-                effString += "    " + effectType.ToString() + ": " + charm.getEffectProbabilities()[(int)effectType] + "\n";
+                effString += effectType.ToString() + ": " + charm.getEffectProbabilities()[(int)effectType] + "\n";
             }
             dataGridView1[3, index].Value = effString;
             dataGridView1[4, index].Value = charm;

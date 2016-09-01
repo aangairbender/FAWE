@@ -8,15 +8,15 @@ namespace FAWE
 {
     class DamageEffect : Effect 
     {
-        private int damageValue;
+        private float damageValue;
 
-        public DamageEffect(int damageValue)
+        public DamageEffect(float damageValue)
         {
             this.damageValue = damageValue;
             this.type = EffectType.Damage;
         }
 
-        public int getDamageValue()
+        public float getDamageValue()
         {
             return damageValue;
         }
@@ -46,9 +46,19 @@ namespace FAWE
 
         public static Effect createInstance(Charm charm)
         {
-            int damageValue = 100 * charm.getElements().getElement(ElementType.Fire); //TODO: fix constant
+            float damageValue = 100 * charm.getElements().getElement(ElementType.Fire) *
+                ElementsInfo.getPercentages(charm.getElements())[(int)ElementType.Fire];
+
+            damageValue += 75 * charm.getElements().getElement(ElementType.Earth) *
+                ElementsInfo.getPercentages(charm.getElements())[(int)ElementType.Earth];
+
             Effect effect = new DamageEffect(damageValue);
             return effect;
+        }
+
+        override public String getDescription()
+        {
+            return "Immediate damage: " + damageValue.ToString();
         }
 
     }

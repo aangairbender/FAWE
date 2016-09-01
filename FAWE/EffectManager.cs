@@ -20,6 +20,7 @@ namespace FAWE
 
         public static float getCarcaseFactor(EffectType effectType, CarcaseType carcaseType)
         {
+            if (effectType == EffectType.None) return 0f;
             string effectName = Enum.GetName(typeof(EffectType), effectType);
             return (float)Type.GetType("FAWE." + effectName + "Effect").GetMethod("getCarcaseFactor").Invoke(null, new object[1] { carcaseType });
         }

@@ -8,15 +8,15 @@ namespace FAWE
 {
     class HealEffect : Effect
     {
-        private int healValue;
+        private float healValue;
 
-        public HealEffect(int healValue)
+        public HealEffect(float healValue)
         {
             this.healValue = healValue;
             this.type = EffectType.Heal;
         }
 
-        public int getHealValue()
+        public float getHealValue()
         {
             return healValue;
         }
@@ -43,9 +43,15 @@ namespace FAWE
 
         public static Effect createInstance(Charm charm)
         {
-            int healValue = 75 * charm.getElements().getElement(ElementType.Water);
+            float healValue = 90 * charm.getElements().getElement(ElementType.Water) * 
+                ElementsInfo.getPercentages(charm.getElements())[(int)ElementType.Water];
             Effect effect = new HealEffect(healValue);
             return effect;
+        }
+
+        override public String getDescription()
+        {
+            return "Immediate heal: " + healValue.ToString();
         }
 
     }

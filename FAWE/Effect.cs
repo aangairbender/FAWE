@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace FAWE
 {
     enum EffectType : int { None, Damage, Heal };
-    class Effect
+    abstract class Effect
     {
         protected EffectType type;
 
@@ -20,6 +20,8 @@ namespace FAWE
         {
             return type;
         }
+
+        abstract public String getDescription();
 
     }
 }
